@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Побут</title>
+<meta name="apple-mobile-web-app-title" content="Побут">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#1D4ED8">
+<meta name="referrer" content="no-referrer">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+  html,body{margin:0;height:100%;background:#EEF2F8}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0}
+  .msg{font:16px system-ui,-apple-system,Arial;color:#0F1E38;text-align:center;padding:40px 20px}
+</style>
+</head>
+<body>
+<iframe id="app" title="Побут" allow="camera"></iframe>
+<noscript><div class="msg">Увімкніть JavaScript.</div></noscript>
+<script>
+/*
+ * Сторінка-обгортка «Побут»: дає іконку на головному екрані й відкриває форму Apps Script.
+ * Ключ телефона береться з ?d=… (або #d=…) і зберігається тут, щоб іконка працювала навіть без нього в адресі.
+ * Жодних даних ця сторінка не зберігає й не надсилає нікуди, крім Google.
+ */
+var FORM_URL = "https://script.google.com/macros/s/AKfycbxfSUGDXlZ6r0FuurpqCicZme6JjF3r9yZ3FJxqTXvWxVC__cPp2H6WCEYeF5wkZ-k/exec";
+(function () {
+  var re = /(?:^|[?#&])d=([a-f0-9]{64})/, m = re.exec(location.search) || re.exec(location.hash), key = m ? m[1] : null;
+  try { if (key) localStorage.setItem("pobut_dev", key); else key = localStorage.getItem("pobut_dev"); } catch (e) {}
+  if (key && !/^[a-f0-9]{64}$/.test(key)) key = null;
+  document.getElementById("app").src = FORM_URL + (key ? "?d=" + key : "");
+})();
+</script>
+</body>
+</html>
